@@ -62,3 +62,33 @@ def translate_first_orf(sequence,
         amino_acids.append(aa)
 
     return amino_acids
+
+def main():
+    """ Handle command line arguments and run translation."""
+
+    parser = argparse.ArgumentParser(
+        description="Translate the first ORF in a nucleotide sequence."
+    )
+
+    parser.add_argument(
+        "-i", "--input",
+        required=True,
+        help="Path to the input nucleotide sequence file"
+    )
+
+    args = parser.parse_args()
+
+    sequence = parse_sequence_from_path(args.input)
+
+    protein = translate_first_orf(sequence)
+
+    if protein is None:
+        print("No ORF found in the sequence.")
+        return
+
+    print("Amino acid sequence:")
+    print(" - ".join(protein))
+
+
+if __name__ == "__main__":
+    main()
